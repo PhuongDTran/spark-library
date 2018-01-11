@@ -1,0 +1,26 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+<form id="SignupForm" method = "post">
+	
+	#if($newUserExist)
+		<p class="unsuccess notification">$msg.get("USER_EXIST")</p>
+	#elseif($passwordNotMatch)
+		<p class="unsuccess notification">$msg.get("PASSWORD_NOT_MATCH")</p>
+	#elseif($success)
+		<p class="success notification">$msg.get("SUCCESS")</p>
+	#end
+	
+	<h1>$msg.get("SIGNUP_HEADING")</h1>
+	
+	<label>$msg.get("SIGNUP_LABEL_USERNAME")</label>
+	<input type="text" name="username" placeholder="$msg.get("SIGNUP_LABEL_USERNAME")" value="" required>
+	
+	<label>$msg.get("SIGNUP_LABEL_ENTERPASSWORD")</label>
+	<input type="password" name="enterpassword" placeholder="$msg.get("SIGNUP_LABEL_ENTERPASSWORD")" value="" required>
+	
+	<label>$msg.get("SIGNUP_LABEL_REENTERPASSWORD")</label>
+	<input type="password" name="reenterpassword" placeholder="$msg.get("SIGNUP_LABEL_REENTERPASSWORD")" value="" required>
+	
+	<input type="submit" name="signup" value="$msg.get("SIGNUP_BUTTON_SIGNUP")">
+</form>
+#end

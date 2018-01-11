@@ -1,0 +1,29 @@
+#parse("/velocity/layout.vm")
+#@mainLayout()
+#if($checkoutButtonClicked)
+		<p>You have checked out successfully</p>
+#else
+	#if( $isListEmpty )
+			<p>empty cart</p>
+	#else
+		<table id="checkoutTable" method="get">
+			<td>
+				<th>Title</th>
+				<th>Author</th>
+				<th>ISBN</th>
+			<td>
+			#foreach($book in $books)
+				<tr>
+					<td>$book.getTitle()</td>
+					<td>$book.getAuthor()</td>
+					<td>$book.getIsbn()</td>
+					<td> <form method = "post"> <input type="submit" name="$book.getIsbn()" value="delete"></form></td>
+				</tr>
+			#end
+		</table>
+		<form method = "post">
+			<input type="submit" name="checkoutbutton" value="$msg.get("CHECKOUT_BUTTON")">
+		</form>
+	#end
+#end
+#end

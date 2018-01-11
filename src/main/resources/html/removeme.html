@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>Spark Library</title>
+<link rel="stylesheet" href="/main.css">
+<link rel="icon" href="/favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+   <header>
+      <nav>
+         <a href="/index/"><img id="logo" src="/img/logo.png" alt="Spark Library"></a>
+         <ul id="chooseLanguage">
+            <form>
+               <li>
+                  <button name="locale" value="de" style="background-image: url(/img/german.png);"></button>
+               </li>
+
+               <li>
+                  <button name="locale" value="en" style="background-image: url(/img/english.png);"></button>
+               </li>
+
+               <li>
+                  <button name="locale" value="vn" style="background-image: url(/img/vietnam.png);"></button>
+               </li>
+            </form>
+         </ul>
+         <ul id="menu">
+            <li><a href="/books/">View all books</a></li>
+            <li>
+               <form method="post" action="/logout/">
+                  <button id="logout">Log out</button>
+               </form>
+            </li>
+         </ul>
+      </nav>
+   </header>
+   <main>
+   <div id="content">
+      <form id="loginForm" method="post">
+         <p class="good notification">You're logged in as 'federico'.</p>
+         <h1>Login</h1>
+         <p>
+            Please enter your username and password. <small><br>(See the <a href="/index/">index page</a>
+               if you need a hint)</small>
+         </p>
+         <label>Username</label> <input type="text" name="username" placeholder="Username" value="" required> <label>Password</label>
+         <input type="password" name="password" placeholder="Password" value="" required> 
+         <input type="submit" value="Log in">
+      </form>
+
+   </div>
+   </main>
+   <footer>
+      This Application uses <a href="https://openlibrary.org/" target="_blank">OpenLibrary</a> for images.
+   </footer>
+</body>
+</html>
