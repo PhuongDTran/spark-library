@@ -15,4 +15,7 @@ public class Book {
     public String getLargeCover() {
         return "http://covers.openlibrary.org/b/isbn/" + this.isbn + "-L.jpg";
     }
+    public String getSmallCover(){
+    	return "http://covers.openlibrary.org/b/isbn/" + this.isbn + "-S.jpg";
+    }
 }
