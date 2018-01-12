@@ -11,7 +11,7 @@ public class connectDb {
 	{
 		if (connection != null) return connection;
 
-		return getConnection("library","root","S2duyphuong!");
+		return getConnection("library","library","S2duyphuong!");
 	}
 
 	private static Connection getConnection(String dbName, String userName, String password) throws Exception
