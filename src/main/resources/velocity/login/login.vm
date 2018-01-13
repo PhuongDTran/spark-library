@@ -19,14 +19,53 @@
     #end
     <input type="submit" value="$msg.get("LOGIN_BUTTON_LOGIN")">
     <input type="hidden" name="email" id="email" value="">
- 	<!-- Google Sign-in -->
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-   		<!--
-   		<div class="g-signin2" data-onsuccess="onSignIn"
-    	data-scope="https://www.googleapis.com/auth/plus.login"
-   		data-accesstype="offline"
-   		data-redirecturi="http://localhost:4567/login"></div>
-		-->
+    
+ 	<!-- Google Sign-in (https://developers.google.com/identity/sign-in/web/) -->
+ 	<div class="g-signin2" 
+ 	    data-onsuccess="onSignIn"
+ 	    data-scope="https://www.googleapis.com/auth/plus.login"
+        data-accesstype="offline"
+        data-redirecturi="http://localhost:4567/login"></div>
+         
+    <script>
+      // https://stackoverflow.com/a/24103596
+	  function setCookie(name,value,days) {
+	    var expires = "";
+	    if (days) {
+	        var date = new Date();
+	        date.setTime(date.getTime() + (days*24*60*60*1000));
+	        expires = "; expires=" + date.toUTCString();
+	    }
+	    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+	  }
+	  // https://developers.google.com/identity/sign-in/web/
+      function onSignIn(googleUser) {
+        // check if googleUser is valid, because this function may be called *before* login 
+        if (typeof googleUser.getBasicProfile !== "undefined") {
+	        // Useful data for your client-side scripts:
+	        var profile = googleUser.getBasicProfile();
+	        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+	        console.log('Full Name: ' + profile.getName());
+	        console.log('Given Name: ' + profile.getGivenName());
+	        console.log('Family Name: ' + profile.getFamilyName());
+	        console.log("Image URL: " + profile.getImageUrl());
+	        console.log("Email: " + profile.getEmail());
+	
+	        // The ID token you need to pass to your backend:
+	        var id_token = googleUser.getAuthResponse().id_token;
+	        console.log("ID Token: " + id_token);
+
+	        // Pass user data to the server w/ a cookie: http://www.javascripter.net/faq/passingp.htm
+	        setCookie('currentToken', id_token, 1);	        
+	        setCookie('currentUser', profile.getEmail(), 1);
+	        // This did not work:
+	        //window.location.replace("http://localhost:4567/books?currentUser=phuong");
+	        // Redirect after sign in to the books page
+	        window.location.replace("http://localhost:4567/books");
+        }
+      };
+    </script>
+        
     <a id="signup" href="$WebPath.getSIGNUP()">Sign up?</a> 
 </form>
 #end

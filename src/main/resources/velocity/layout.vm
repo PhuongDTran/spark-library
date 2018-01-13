@@ -5,25 +5,16 @@
     <link rel="stylesheet" href="/main.css">
     <link rel="icon" href="/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- following code added later. Start-->    
-    <meta name="google-signin-client_id" content="202753348946-7ji08u78ukoherrg9ch5omkib8jv7303.apps.googleusercontent.com">   
-    
-<script src="https://apis.google.com/js/platform.js" async defer>
-	function onSignIn(googleUser) {
-  		var profile = googleUser.getBasicProfile();
-  		console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-  		console.log('Name: ' + profile.getName());
-  		console.log('Image URL: ' + profile.getImageUrl());
-  		console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-	}
-	function onloadscript(){
-		console.log('inside onload script');
-	}
-</script>    
+<!-- following code added later. Start-->
+    <!-- Google Sign-in https://developers.google.com/identity/sign-in/web/ -->
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="202753348946-7ji08u78ukoherrg9ch5omkib8jv7303.apps.googleusercontent.com"> 
+    <script src="https://apis.google.com/js/platform.js" async defer></script>  
 <!-- end-->          
     
 </head>
-<body onload="onloadscript();">
+<body>
+
 <header>
     <nav>
         <a href="$WebPath.getINDEX()"><img id="logo" src="/img/logo.png" alt="Spark Library"></a>

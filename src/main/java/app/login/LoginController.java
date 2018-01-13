@@ -37,6 +37,7 @@ public class LoginController {
 	public static Route handleLogoutPost = (Request request, Response response) -> {
 		request.session().removeAttribute("currentUser");
 		request.session().attribute("loggedOut", true);
+		request.cookies().remove("currentUser");
 		response.redirect(Path.Web.LOGIN);
 		return null;
 	};
@@ -48,9 +49,17 @@ public class LoginController {
 	 */
 	public static boolean ensureUserIsLoggedIn(Request request, Response response) {
 		if (request.session().attribute("currentUser") == null) {
-			request.session().attribute("loginRedirect", request.pathInfo());
-			response.redirect(Path.Web.LOGIN);
-			return false;
+			// the current username/email may be passed to us in a cookie
+			String userCookie = request.cookie("currentUser");
+			if (userCookie != null && userCookie.length() > 0) {
+				// save the username in a session variable with the same key name
+				request.session().attribute("currentUser", userCookie);
+				return true;
+			} else {
+				request.session().attribute("loginRedirect", request.pathInfo());
+				response.redirect(Path.Web.LOGIN);
+				return false;
+			}
 		}
 		return true;
 	};
