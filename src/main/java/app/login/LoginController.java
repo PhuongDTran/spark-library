@@ -38,6 +38,7 @@ public class LoginController {
 		request.session().removeAttribute("currentUser");
 		request.session().attribute("loggedOut", true);
 		request.cookies().remove("currentUser");
+		response.removeCookie("currentUser");
 		response.redirect(Path.Web.LOGIN);
 		return null;
 	};
