@@ -9,11 +9,34 @@
     <!-- Google Sign-in https://developers.google.com/identity/sign-in/web/ -->
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="202753348946-7ji08u78ukoherrg9ch5omkib8jv7303.apps.googleusercontent.com"> 
-    <script src="https://apis.google.com/js/platform.js" async defer></script>  
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>   
 <!-- end-->          
     
 </head>
 <body>
+
+#if($currentUser)
+   <script>
+      function eraseCookie(name) {
+         document.cookie = name+'=; Max-Age=-99999999;';
+      }
+      function signOut() {
+         var auth2 = gapi.auth2.getAuthInstance();
+         auth2.signOut().then(function () {
+            console.log('User signed out.');
+         });
+         eraseCookie('currentUser');
+      }
+                   
+      function onLoad() {
+         // make sure auth2 is initialized at page load, before signOut() can be called
+         // https://stackoverflow.com/a/29833065
+         gapi.load('auth2', function() {
+            gapi.auth2.init();
+         });
+      }
+  </script>
+#end
 
 <header>
     <nav>
@@ -38,7 +61,7 @@
             #if($currentUser)
                 <li>
                     <form method="post" action="$WebPath.getLOGOUT()">
-                        <button id="logout">$msg.get("COMMON_NAV_LOGOUT")</button>
+                        <button id="logout" onclick="signOut();">$msg.get("COMMON_NAV_LOGOUT")</button>
                     </form>
                 </li>
             #else
