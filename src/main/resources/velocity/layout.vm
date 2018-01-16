@@ -17,8 +17,11 @@
 
 #if($currentUser)
    <script>
+   	// set expire date in the past
+   	// https://www.w3schools.com/js/js_cookies.asp
       function eraseCookie(name) {
-         document.cookie = name+'=; Max-Age=-99999999;';
+	     expires = "; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+         document.cookie = name + "=" + "" + expires + "; path=/";
       }
       function signOut() {
          var auth2 = gapi.auth2.getAuthInstance();
