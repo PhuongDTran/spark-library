@@ -29,6 +29,7 @@
             console.log('User signed out.');
          });
          eraseCookie('currentUser');
+         eraseCookie('currentToken');
       }
                    
       function onLoad() {
