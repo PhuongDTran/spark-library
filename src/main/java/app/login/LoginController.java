@@ -40,7 +40,7 @@ public class LoginController {
 		request.cookies().remove("currentUser");
 		response.removeCookie("currentUser");
 		// pass a cookie back to the client indicating logout
-		response.cookie("/", "loggedOut", "true", 3600, false);
+		//response.cookie("/", "loggedOut", "true", 3600, false);
 		response.redirect(Path.Web.LOGIN);
 		return null;
 	};

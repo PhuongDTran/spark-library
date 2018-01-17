@@ -9,11 +9,23 @@
     <!-- Google Sign-in https://developers.google.com/identity/sign-in/web/ -->
     <meta name="google-signin-scope" content="profile email">
     <meta name="google-signin-client_id" content="202753348946-7ji08u78ukoherrg9ch5omkib8jv7303.apps.googleusercontent.com"> 
-    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>   
+    <script src="https://apis.google.com/js/platform.js?" async defer></script>   
+	<script>
+		//Google reference:
+		//https://developers.google.com/identity/sign-in/web/reference#googleauthgrantofflineaccessoptions
+		function onLoad() 
+		{	
+        	// make sure auth2 is initialized at page load
+         	// https://stackoverflow.com/a/29833065
+         	gapi.load('auth2', function() {
+            	gapi.auth2.init();
+         	});
+      	}
+   </script>
 <!-- end-->          
     
 </head>
-<body>
+<body onload="onLoad();">
 
 #if($currentUser)
    <script>
@@ -24,20 +36,10 @@
          document.cookie = name + "=" + "" + expires + "; path=/";
       }
       function signOut() {
-         var auth2 = gapi.auth2.getAuthInstance();
-         auth2.signOut().then(function () {
-            console.log('User signed out.');
-         });
+         var googleAuth = gapi.auth2.getAuthInstance();
+         googleAuth.signOut();
          eraseCookie('currentUser');
          eraseCookie('currentToken');
-      }
-                   
-      function onLoad() {
-         // make sure auth2 is initialized at page load, before signOut() can be called
-         // https://stackoverflow.com/a/29833065
-         gapi.load('auth2', function() {
-            gapi.auth2.init();
-         });
       }
   </script>
 #end
