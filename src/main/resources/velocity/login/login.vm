@@ -18,7 +18,7 @@
         <input type="hidden" name="loginRedirect" value="$loginRedirect">
     #end
     <input type="submit" value="$msg.get("LOGIN_BUTTON_LOGIN")">
-    <input type="hidden" name="email" id="email" value="">
+    
     
  	<!-- Google Sign-in (https://developers.google.com/identity/sign-in/web/) -->
  	<div class="g-signin2" 

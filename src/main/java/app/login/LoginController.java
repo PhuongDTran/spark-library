@@ -4,6 +4,9 @@ import app.user.*;
 import app.util.*;
 import spark.*;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.*;
 import static app.util.RequestUtil.*;
 
@@ -49,14 +52,16 @@ public class LoginController {
      The origin of the request (request.pathInfo()) is saved in the session so
      the user can be redirected back after login
      @return true if logged in, false if not log in
+	 * @throws Exception 
 	 */
-	public static boolean ensureUserIsLoggedIn(Request request, Response response) {
+	public static boolean ensureUserIsLoggedIn(Request request, Response response) throws Exception {
 		if (request.session().attribute("currentUser") == null) {
 			// the current username/email may be passed to us in a cookie
 			String userCookie = request.cookie("currentUser");
 			if (userCookie != null && userCookie.length() > 0) {
 				// save the username in a session variable with the same key name
 				request.session().attribute("currentUser", userCookie);
+				handleGoogleSignIn(userCookie);
 				return true;
 			} else {
 				request.session().attribute("loginRedirect", request.pathInfo());
@@ -66,5 +71,27 @@ public class LoginController {
 		}
 		return true;
 	};
+	/**
+	 * check if 'currentUser' is a gmail address.
+	 * If does, add that email address to 'user' table in database if not exist in the table.
+	 * @param currentUser
+	 * @throws Exception 
+	 */
+	private static void handleGoogleSignIn(String currentUser) throws Exception
+	{
+		if(currentUser.contains("@gmail.com"))
+		{
+			Connection conn = connectDb.getConnection();
+			Statement statement = conn.createStatement();
+			String sql = String.format("SELECT * FROM user WHERE username='%s'", currentUser);
+			ResultSet rs = statement.executeQuery(sql);
+			if(!rs.next())
+			{
+				sql = String.format("INSERT INTO user(username) VALUES('%s')", currentUser);
+				statement.executeUpdate(sql);
+			}	
+			conn.close();
+		}
+	}
 
 }
